@@ -1,8 +1,8 @@
 
-# Contracts Panel
+## Contracts Panel
 
-Technologies and Tools:
-***
 
-## CodeIgniter 3.1.11
+# Tools and technology used to write the project.
+
+* CodeIgniter 3.1.11
 
