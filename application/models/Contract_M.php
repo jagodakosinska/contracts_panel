@@ -104,4 +104,11 @@ function update_contract_pdf($id)
     $pdf_content = $snappy->getOutput($url_to_pdf);
     $this->db->set('pdf', $pdf_content)->where('id', $id)->update('contract');
 }
+
+function update_contract_bill($bill_id, $uid)
+{
+    $this->db->set('bill', $bill_id)->where('uid', $uid)->update('contract');
+}
+
+
 }
