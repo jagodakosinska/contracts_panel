@@ -53,4 +53,10 @@ class Contract extends MY_Controller{
         }
         $this->load_views($data, 'form');
     }
+
+    function create_pdf($id)
+    {
+        $this->Contract_M->update_contract_pdf($id);
+    }
+
 }
