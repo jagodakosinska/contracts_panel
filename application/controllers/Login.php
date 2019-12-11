@@ -16,7 +16,7 @@ class Login extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    function sing_up()
+   function sing_up()
     {
         $data['action'] = 'sing_up';
         $data['submit'] = 'register';
@@ -38,5 +38,4 @@ class Login extends CI_Controller
         $this->load_views($data);
     }
 
-    
 }

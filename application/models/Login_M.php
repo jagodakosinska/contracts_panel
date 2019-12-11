@@ -29,4 +29,14 @@ class Login_M extends CI_Model
         $this->db->insert('users', $arr);
     }
 
+    function check_user($arr)
+    {
+
+        $this->db->select('username, password')->from('users')->where('username', $arr['username']);
+        $res = $this->db->get()->result();
+        if ($res[0]->password === $arr['password']) {
+            return $res;
+        }
+        return null;
+    }
 }
