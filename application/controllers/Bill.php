@@ -62,4 +62,11 @@ class Bill extends MY_Controller
     {
         $this->Bill_M->update_bill_pdf($id);
     }
+
+
+    function delete($id){
+        $res = $this->Bill_M->delete($id);
+        $this->session->set_flashdata('info', "Usunięto rachunek nr {$res->full_number}");
+        redirect('home');
+    }
 }
