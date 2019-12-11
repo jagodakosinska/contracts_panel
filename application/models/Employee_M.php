@@ -84,4 +84,10 @@ class Employee_M extends CI_Model{
         return isset($res[0]) ? $res[0] : null;
     }
 
+    function update($id, $arr){
+           $this->db->set($arr)->where('id', $id)->update('employee');
+           $res = $this->get_by_id($id);
+           return $res;
+       }
+
 }
