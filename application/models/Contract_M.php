@@ -54,6 +54,15 @@ function get_list_by_uid($uid)
     return isset($res) ? $res : null;
 }
 
+function get_array_by_id($id)
+{
+
+    $this->db->select('bdate, edate, title, uid');
+    $this->db->from('contract')->where('id', $id);
+    $res = $this->db->get()->result();
+    return isset($res[0]) ? $res[0] : null;
+}
+
 function valid_data()
 {
     $this->form_validation->set_rules('cont[bdate]', 'Data rozpoczęcia umowy', 'required|trim');
