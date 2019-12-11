@@ -63,8 +63,7 @@ function valid_data()
 
 function insert($arr, $task)
 {
-
-    $month = $this->check_periot($arr['bdate']);
+    $month = $this->check_period($arr['bdate']);
     $number = $this->set_number($month);
     $num = $number->number + 1;
     $arr['number'] = $num;
@@ -72,5 +71,12 @@ function insert($arr, $task)
     $this->db->insert('contract', $arr);
     $id = $this->db->insert_id();
     return $id;
+}
+
+function check_period($bdate)
+{
+    $act_month = $this->session->month;
+    $selected_month = date('m', strtotime($bdate));
+    return $act_month !== $selected_month ? $selected_month : $act_month;
 }
 }
