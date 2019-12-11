@@ -24,4 +24,9 @@ class Login_M extends CI_Model
         return null;
     }
 
+    function  add_user($arr)
+    {
+        $this->db->insert('users', $arr);
+    }
+
 }
