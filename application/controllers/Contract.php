@@ -32,13 +32,31 @@ class Contract extends MY_Controller{
         $this->load_views($data, 'item');
     }
 
-    function get_by_uid($uid)
+    function add_new($uid, $task)
     {
-        $month = $this->session->month;
-        $year = $this->session->year;
-        $where = "`uid`=$uid AND MONTH(`bdate`)=$month AND YEAR(`bdate`)=$year";
-        $this->db->from('contract')->where($where);
-        $res = $this->db->get()->result();
-        return isset($res[0]) ? $res[0] : null;
+        $data = $this->data;
+        $data['action'] = 'add_new';
+        $data['uid'] = $uid;
+        $data['task'] = $task;
+        $data['id_contract'] = '';
+        $data['form_data']  = $this->input->post('cont');
+        if ($this->input->post('add_contract')) {
+            $arr = $this->Contract_M->valid_data();
+            if (!is_null($arr)) {
+                $id = $this->Contract_M->insert($arr, $data['task'] );
+                $res = $this->Contract_M->get_by_id($id);
+                $this->create_pdf($res->id);
+                $this->session->set_flashdata('info', "Dodano nową umowę $res->number");
+                redirect('home');
+            }
+            $this->session->set_flashdata('error', "Nie udało się dodać umowy!");
+        }
+        $this->load_views($data, 'form');
     }
+
+    function create_pdf($id)
+    {
+        $this->Contract_M->update_contract_pdf($id);
+    }
+
 }

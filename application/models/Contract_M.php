@@ -39,4 +39,53 @@ function get_by_uid($uid)
     $res = $this->db->get()->result();
     return isset($res[0]) ? $res[0] : null;
 }
+
+function valid_data()
+{
+    $this->form_validation->set_rules('cont[bdate]', 'Data rozpoczęcia umowy', 'required|trim');
+    $this->form_validation->set_rules('cont[edate]', 'Data zakończenia umowy', 'required|trim');
+    $this->form_validation->set_rules('cont[title]', 'Tytuł', 'required|trim');
+    $this->form_validation->set_rules('cont[uid]', '', 'required|trim');
+    $this->form_validation->set_rules('cont[task]', '', 'required|trim');
+    if ($this->form_validation->run() !== false) {
+        $data['form_data']  = $this->input->post('cont');
+        $form_data = $data['form_data'];
+        $arr = [
+            'bdate' => $form_data['bdate'],
+            'edate' => $form_data['edate'],
+            'title' => $form_data['title'],
+            'uid' => $form_data['uid']
+        ];
+        return $arr;
+    }
+    return null;
+}
+
+function insert($arr, $task)
+{
+    $month = $this->check_period($arr['bdate']);
+    $number = $this->set_number($month);
+    $num = $number->number + 1;
+    $arr['number'] = $num;
+    $arr['full_number'] = $task . '/' . $num . '/' . $month . '/' .  date('Y');
+    $this->db->insert('contract', $arr);
+    $id = $this->db->insert_id();
+    return $id;
+}
+
+function check_period($bdate)
+{
+    $act_month = $this->session->month;
+    $selected_month = date('m', strtotime($bdate));
+    return $act_month !== $selected_month ? $selected_month : $act_month;
+}
+
+function set_number($month)
+{
+    $where = "MONTH(`bdate`)=$month";
+    $this->db->select('number')->from('contract')->where($where);
+    $res = $this->db->get()->result();
+    $number = $res == 0 ? 1 : max($res);
+    return $number;
+}
 }
