@@ -59,4 +59,22 @@ class Contract extends MY_Controller{
         $this->Contract_M->update_contract_pdf($id);
     }
 
+    function edit($id_contract, $task, $uid){
+        $data = $this->data;
+        $data['action'] = 'edit';
+        $data['uid'] = $uid;
+        $data['task'] = $task;
+        $data['id_contract'] = $id_contract;
+        $data['form_data']  =  $this->Contract_M->get_array_by_id($id_contract);
+        if ($this->input->post('add_contract')) {
+            $arr = $this->Contract_M->valid_data();
+            if (!is_null($arr)) {
+                $this->Contract_M->insert_apendix($id_contract, $arr);
+                $this->session->set_flashdata('info', "Dodano anex do umowy!");
+                redirect('home');
+            }
+            $this->session->set_flashdata('error', "Nie udało się zmienić umowy!");
+        }
+        $this->load_views($data, 'form');
+    }
 }
