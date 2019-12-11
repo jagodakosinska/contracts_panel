@@ -17,6 +17,13 @@ function show_list()
     return $res;
 }
 
+function show_by_bill_id($id)
+{
+    $this->db->from('contract')->where('bill', $id);
+    $res = $this->db->get()->result();
+    return isset($res[0]) ? $res[0] : null;
+}
+
 function get_by_id($id)
 {
     $this->db->from('contract')->where('id', $id);
