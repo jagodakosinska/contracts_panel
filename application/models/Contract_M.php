@@ -117,5 +117,22 @@ function update_contract_bill($bill_id, $uid)
     $this->db->set('bill', $bill_id)->where('uid', $uid)->update('contract');
 }
 
+function insert_apendix($id_contract, $arr )
+{
+    $old_contract = $this->get_array_by_id($id_contract);
+    $to_update = [];
+    foreach ($arr as $key => $val) {
+
+        if ($old_contract->{$key}  != $val) {
+            $to_update[] = [
+                'column_name' => $key,
+                'original_value' => $old_contract->{$key},
+                'changed_value' => $arr[$key],
+                'id_contract' => $id_contract
+            ];
+        }
+    }
+    $this->db->insert_batch('apendix', $to_update);
+}
 
 }
