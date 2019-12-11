@@ -38,4 +38,24 @@ class Login extends CI_Controller
         $this->load_views($data);
     }
 
+    function login()
+    {
+        $data['action'] = 'login';
+        $data['submit'] = 'login';
+        if ($this->input->post('login')) {
+            $arr = $this->Login_M->valid_data();
+            if (!is_null($arr)) {
+                $res = $this->Login_M->check_user($arr);
+                if (!is_null($res)) {
+                    $res['logged_in'] =  TRUE;
+                    $this->session->set_userdata('user', $res);
+                    $this->session->set_flashdata('info', "Jesteś zalogowany");
+                    redirect('home');
+                }
+            }
+            $this->session->set_flashdata('error', "Nie udało się zalogować!");
+        }
+        $this->load_views($data);
+    }
+
 }
