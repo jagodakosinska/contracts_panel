@@ -77,4 +77,11 @@ class Contract extends MY_Controller{
         }
         $this->load_views($data, 'form');
     }
+
+    function delete($id){
+        $res = $this->Contract_M->delete($id);
+        $this->session->set_flashdata('info', "Usunięto umowę nr {$res->full_number}");
+        $this->session->set_flashdata('info', "Usunięto rachunek nr {$res->bill}");
+        redirect('home');
+    }
 }
