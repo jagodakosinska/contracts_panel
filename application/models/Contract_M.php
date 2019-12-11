@@ -144,4 +144,15 @@ function insert_apendix($id_contract, $arr )
     $this->db->insert_batch('apendix', $to_update);
 }
 
+function delete($id)
+{
+    $res = $this->get_by_id($id);
+    $bill_id = $res->bill;
+    $this->db->where('id', $id)->delete('contract');
+    $this->db->where('id', $bill_id)->delete('bill');
+    $this->db->where('id_contract', $id)->delete('apendix');
+    return $res;
+}
+
+
 }
