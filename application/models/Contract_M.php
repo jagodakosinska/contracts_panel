@@ -79,4 +79,13 @@ function check_period($bdate)
     $selected_month = date('m', strtotime($bdate));
     return $act_month !== $selected_month ? $selected_month : $act_month;
 }
+
+function set_number($month)
+{
+    $where = "MONTH(`bdate`)=$month";
+    $this->db->select('number')->from('contract')->where($where);
+    $res = $this->db->get()->result();
+    $number = $res == 0 ? 1 : max($res);
+    return $number;
+}
 }
