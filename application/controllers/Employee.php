@@ -52,6 +52,23 @@ class Employee extends MY_Controller
         }
         $this->load_views($data, 'form');
     }
+
+    function edit($id){
+        $data = $this->data;
+        $data['id'] = $id;
+        $data['action'] = 'edit';
+        $data['form_data'] = $this->Employee_M->get_by_id($id);
+            if ($this->input->post('add_employee')) {
+            $arr = $this->Employee_M->valid_data();
+            if (!is_null($arr)) {
+                $res = $this->Employee_M->update($id, $arr);
+                $this->session->set_flashdata('info', "Zmieniono dane klienta $res->fname $res->lname");
+                redirect('home');
+            }
+            $this->session->set_flashdata('error', "Coś poszło nie tak spróbuj ponownie");
+        }
+        $this->load_views($data, 'form');
+    }
 }
 
 
