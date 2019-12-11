@@ -17,6 +17,13 @@ function show_list()
     return $res;
 }
 
+function show_by_bill_id($id)
+{
+    $this->db->from('contract')->where('bill', $id);
+    $res = $this->db->get()->result();
+    return isset($res[0]) ? $res[0] : null;
+}
+
 function get_by_id($id)
 {
     $this->db->from('contract')->where('id', $id);
@@ -87,5 +94,14 @@ function set_number($month)
     $res = $this->db->get()->result();
     $number = $res == 0 ? 1 : max($res);
     return $number;
+}
+
+function update_contract_pdf($id)
+{
+    $url_to_pdf = site_url("pdf/create_contract_pdf/{$id}");
+    require dirname(dirname(__FILE__)) . '/third_party/pdf/vendor/autoload.php';
+    $snappy = new Pdf('/usr/bin/xvfb-run /usr/bin/wkhtmltopdf --lowquality');
+    $pdf_content = $snappy->getOutput($url_to_pdf);
+    $this->db->set('pdf', $pdf_content)->where('id', $id)->update('contract');
 }
 }
