@@ -26,4 +26,40 @@ class Bill extends MY_Controller
         $this->load_views($data, 'item');
     }
 
+    function add_new($uid, $bank_transfer, $cost_pcent)
+    {
+        $data = $this->data;
+        $data['form_data'] = $this->input->post('bill');
+        $data['uid'] = $uid;
+        $data['cost_pcent'] = $cost_pcent;
+        $data['bank_transfer'] = $bank_transfer;
+        $this->load_views($data, 'form');
+    }
+
+    function insert()
+    {
+        $data = $this->data;
+        $data['form_data'] = $this->input->post('bill');
+        $data['uid'] =  $this->input->post('bill[uid]');
+        $data['cost_pcent'] =  $this->input->post('bill[cost_pcent]');
+        $data['bank_transfer'] =  $this->input->post('bill[bank_transfer]');
+
+        if ($this->input->post('add_bill')) {
+            $arr = $this->Bill_M->valid_data();
+            if (!is_null($arr)) {
+                $id = $this->Bill_M->insert($arr);
+                $this->Contract_M->update_contract_bill($id, $data['uid']);
+                $this->Bill_M->update_bill_number($id);
+                $this->create_pdf($id);
+                $this->session->set_flashdata('info', 'Utworzono nowy rachunek');
+                redirect('home');
+            }
+            $this->session->set_flashdata('error', "Nie udało się dodać rachunku!");
+        }
+        $this->load_views($data, 'form');
+    }
+    function create_pdf($id)
+    {
+        $this->Bill_M->update_bill_pdf($id);
+    }
 }

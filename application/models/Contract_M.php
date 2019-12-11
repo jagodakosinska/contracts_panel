@@ -1,5 +1,8 @@
 <?php
 
+
+use Knp\Snappy\Pdf;
+
 class Contract_M extends CI_Model{
 public function __construct()
 {
