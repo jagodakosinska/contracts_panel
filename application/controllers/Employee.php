@@ -6,6 +6,7 @@ class Employee extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Employee_M');
     }
 
         private function load_views($data, $page){
@@ -14,7 +15,14 @@ class Employee extends MY_Controller
             $this->load->view("employee/{$page}", $data);
             $this->load->view('templates/footer');
         }    
-    
+        function index()
+        {
+            $data = $this->data;
+            $data['employee'] = $this->Employee_M->show_list();
+            $this->load_views($data, 'list');
+        }
+
+
 }
 
 
