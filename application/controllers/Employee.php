@@ -7,6 +7,7 @@ class Employee extends MY_Controller
     {
         parent::__construct();
         $this->load->model('Employee_M');
+        $this->load->model('Contract_M');
     }
 
         private function load_views($data, $page){
@@ -25,7 +26,7 @@ class Employee extends MY_Controller
         function show_details($id)
         {
             $data = $this->data;
-            // $data['contract'] = $this->Contract_M->get_list_by_uid($id);
+            $data['contract'] = $this->Contract_M->get_list_by_uid($id);
             $data['employee'] = $this->Employee_M->get_by_id($id);
             if (is_null($data['employee'])) {
                 $this->session->set_flashdata('error', "Nie ma takiego pracownika!");
