@@ -7,4 +7,5 @@
 * CodeIgniter 3.1.11
 * Bootstrap
 * Pdf library Knp\Snappy
+* MySql DB
 
