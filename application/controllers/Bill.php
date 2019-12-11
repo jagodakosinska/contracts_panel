@@ -26,4 +26,15 @@ class Bill extends MY_Controller
         $this->load_views($data, 'item');
     }
 
+    function add_new($uid, $bank_transfer, $cost_pcent)
+    {
+        $data = $this->data;
+        $data['form_data'] = $this->input->post('bill');
+        $data['uid'] = $uid;
+        $data['cost_pcent'] = $cost_pcent;
+        $data['bank_transfer'] = $bank_transfer;
+        $this->load_views($data, 'form');
+    }
+
+
 }
