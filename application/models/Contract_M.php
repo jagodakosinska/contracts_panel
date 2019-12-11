@@ -17,5 +17,18 @@ function show_list()
     return $res;
 }
 
+function get_by_id($id)
+{
+    $this->db->from('contract')->where('id', $id);
+    $res = $this->db->get()->result();
+    return isset($res[0]) ? $res[0] : null;
+}
+
+function get_apendix_by_contract_id($id_contract){
+    $this->db->from('apendix')->where('id_contract', $id_contract);
+    $res = $this->db->get()->result();
+    return isset($res) ? $res : null;
+}
+
 
 }
