@@ -22,6 +22,17 @@ class Employee extends MY_Controller
             $this->load_views($data, 'list');
         }
 
+        function show_details($id)
+        {
+            $data = $this->data;
+            // $data['contract'] = $this->Contract_M->get_list_by_uid($id);
+            $data['employee'] = $this->Employee_M->get_by_id($id);
+            if (is_null($data['employee'])) {
+                $this->session->set_flashdata('error', "Nie ma takiego pracownika!");
+                redirect('home');
+            }
+            $this->load_views($data, 'item');
+        }
 
 }
 

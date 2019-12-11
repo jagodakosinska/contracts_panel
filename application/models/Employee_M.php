@@ -13,9 +13,14 @@ class Employee_M extends CI_Model{
         return $res;
     }
 
+    function get_by_id($id)
+    {
+        $this->db->from('employee')->where('id', $id);
+        $res =  $this->db->get()->result();
+        return isset($res[0]) ? $res[0] : null;
+    }
 
 
 
 
-    
 }
