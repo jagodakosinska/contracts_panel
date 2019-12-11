@@ -61,5 +61,16 @@ function valid_data()
     return null;
 }
 
+function insert($arr, $task)
+{
 
+    $month = $this->check_periot($arr['bdate']);
+    $number = $this->set_number($month);
+    $num = $number->number + 1;
+    $arr['number'] = $num;
+    $arr['full_number'] = $task . '/' . $num . '/' . $month . '/' .  date('Y');
+    $this->db->insert('contract', $arr);
+    $id = $this->db->insert_id();
+    return $id;
+}
 }
