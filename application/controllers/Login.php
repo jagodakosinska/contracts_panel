@@ -58,4 +58,8 @@ class Login extends CI_Controller
         $this->load_views($data);
     }
 
+    function logout(){
+        $this->session->unset_userdata('user');
+           redirect('home');
+       }
 }

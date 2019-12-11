@@ -50,5 +50,10 @@ class MY_Controller extends  CI_Controller
             'params' => $this->session->params,
     
         ];
+
+        if(!(isset($this->session->user) && $this->session->user['logged_in'])){
+            redirect('login/login');
+        }
     }
+    
 }
