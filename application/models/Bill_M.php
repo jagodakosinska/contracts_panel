@@ -52,6 +52,15 @@ class Bill_M extends CI_Model
         } else {
             return null;
         }
-       
     }
+
+    function update_bill_pdf($id)
+    {
+        $url_to_pdf = site_url("pdf/create_bill_pdf/{$id}");
+        require dirname(dirname(__FILE__)) . '/third_party/pdf/vendor/autoload.php';
+        $snappy = new Pdf('/usr/bin/xvfb-run /usr/bin/wkhtmltopdf --lowquality');
+        $pdf_content = $snappy->getOutput($url_to_pdf);
+        $this->db->set('pdf', $pdf_content)->where('id', $id)->update('bill');
+    }
+
 }
