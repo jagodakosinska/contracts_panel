@@ -75,5 +75,13 @@ class Employee_M extends CI_Model{
         return null;
     }
 
+    function insert($arr)
+    {
+        $this->db->insert('employee', $arr);
+        $id = $this->db->insert_id();
+        $this->db->from('employee')->where('id', $id);
+        $res = $this->db->get()->result();
+        return isset($res[0]) ? $res[0] : null;
+    }
 
 }
