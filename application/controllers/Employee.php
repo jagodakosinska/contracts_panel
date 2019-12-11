@@ -35,6 +35,23 @@ class Employee extends MY_Controller
             $this->load_views($data, 'item');
         }
 
+        function add_new()
+    {
+        $data = $this->data;
+        $data['id'] = '';
+        $data['action'] = 'add_new';
+        $data['form_data']  = $this->input->post('emp');
+        if ($this->input->post('add_employee')) {
+            $arr = $this->Employee_M->valid_data();
+            if (!is_null($arr)) {
+                $res = $this->Employee_M->insert($arr);
+                $this->session->set_flashdata('info', "Dodano nowego klienta $res->fname $res->lname");
+                redirect('home');
+            }
+            $this->session->set_flashdata('error', "Nie udało się dodać pracownika!");
+        }
+        $this->load_views($data, 'form');
+    }
 }
 
 
