@@ -39,5 +39,10 @@ class Bill_M extends CI_Model
     }
 
 
+    function insert($arr){
+        $this->db->insert('bill', $arr);
+        $id = $this->db->insert_id();
+        return $id;
+    }
 
 }
