@@ -30,5 +30,13 @@ function get_apendix_by_contract_id($id_contract){
     return isset($res) ? $res : null;
 }
 
-
+function get_by_uid($uid)
+{
+    $month = $this->session->month;
+    $year = $this->session->year;
+    $where = "`uid`=$uid AND MONTH(`bdate`)=$month AND YEAR(`bdate`)=$year";
+    $this->db->from('contract')->where($where);
+    $res = $this->db->get()->result();
+    return isset($res[0]) ? $res[0] : null;
+}
 }
