@@ -38,11 +38,20 @@ class Bill_M extends CI_Model
         return null;
     }
 
-
     function insert($arr){
         $this->db->insert('bill', $arr);
         $id = $this->db->insert_id();
         return $id;
     }
 
+    function update_bill_number($id){
+        $res = $this->Contract_M->show_by_bill_id($id);
+        if(!is_null($res)){
+            $num = $res->number . '/' . date('m') . '/' .  date('Y');
+            $this->db->set('full_number', $num)->where('id', $id)->update('bill');
+        } else {
+            return null;
+        }
+       
+    }
 }
