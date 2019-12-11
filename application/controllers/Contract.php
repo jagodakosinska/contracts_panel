@@ -5,7 +5,8 @@ class Contract extends MY_Controller{
     {
     parent:: __construct();
     $this->load->model('Contract_M');  
-    $this->load->model('Employee_M');   
+    $this->load->model('Employee_M'); 
+    $this->load->model('Bill_M');  
     }
 
     private function load_views($data, $page){
