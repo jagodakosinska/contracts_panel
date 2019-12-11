@@ -63,4 +63,11 @@ class Bill_M extends CI_Model
         $this->db->set('pdf', $pdf_content)->where('id', $id)->update('bill');
     }
 
+    function delete($id){
+        $res = $this->get_by_id($id);
+        $this->db->set('bill', null)->where('bill', $id)->update('contract');
+        $this->db->where('id', $id)->delete('bill');
+        return $res;
+    }
+
 }
