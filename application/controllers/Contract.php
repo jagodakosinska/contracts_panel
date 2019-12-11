@@ -14,5 +14,12 @@ class Contract extends MY_Controller{
         $this->load->view('templates/footer');
     }
 
+    function index()
+    {
+        $data = $this->data;
+        $data['contract'] = $this->Contract_M->show_list();
+        $this->load_views($data, 'list');
+    }
+
 
 }
